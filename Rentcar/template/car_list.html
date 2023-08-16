@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+
+{% block content %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+    
+      thead {
+        background-color: #f7f7f7;
+        font-weight: bold;
+      }
+    
+      th, td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+    
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+    
+      .imgs {
+        width: 100px;
+        height: 100px;
+        float: left;
+      }
+    
+      .add {
+        background-color:green;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        float: right;
+      }
+    
+    .del {
+        background-color: #ff0000;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .edit{
+        background-color:violet;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    
+      @media screen and (max-width: 768px) {
+        table {
+          width: 100%;
+        }
+    
+        .imgs {
+          width: 100%;
+          height: auto;
+        }
+    
+        tr {
+          display: flex;
+          flex-direction: column;
+        }
+    
+        th, td {
+          text-align: left;
+        }
+    
+        .add, .edit, .del {
+          float: none;
+          margin-top: 10px;
+        }
+      }
+</style>
+
+
+<table class='table table-borderless'>
+    <thead class='border-bottom font-weight-bold'>
+     <tr>
+        <!-- <td > Car image</td> -->
+        <td>id</td>
+        <td >Make</td>
+        <td>Model</td>
+        <td>Year</td>
+        <td>Transmission</td>
+        <td>Rent</td>
+        <td>is_available</td>
+        <td>Description</td>
+        
+
+    
+        <a  href="{% url 'car_insert' %}" >  <button  class="add  mt-3 me-3 mb-3 fw-bolder ">ADD NEW CARS</button></a>
+        <td>
+          
+        </td>
+  
+  
+     </tr>
+    </thead>
+    <tbody>
+      
+     
+     
+     {%for list in cars  %}
+  
+     <tr>
+
+
+    
+     <td>{{list.id }}</td>
+    <td> {{list.make}}  </td>
+    <td> {{list.model}} </td>
+    <td> {{list.year}}</td>
+    <td> {{list.transmission}}</td> 
+    <td> {{list.price}}</td>
+    <td> {{list.is_available}}</td>
+    <td> {{list.description}}</td>
+  
+    <td>
+  
+     
+     <a  href="{% url 'car_update' list.id %}"  >  <button  class='edit'>EDIT</button></a>
+     
+   
+  
+        <a  href="{% url 'car_delete' list.id %}">  <button class='del'  >Delete</button></a>
+   
+    
+   
+    </td>
+  
+  
+     </tr>
+  
+  
+     {%endfor%}
+    </tbody>
+  
+  </table>
+
+
+
+{% endblock %}

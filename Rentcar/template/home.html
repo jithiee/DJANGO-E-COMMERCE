@@ -1,0 +1,31 @@
+{% extends  'base.html' %} 
+{%load static%}
+{%block title %}
+Home
+{%endblock %}
+{%block content %}
+
+
+
+{% for car in Vehicles %}
+<div class="d-inline-block ps-5" >
+<div class="card_home  " style="width: 13rem;">
+   
+    <a href="{% url 'view' car.id %}"> <img class="card-img-top" src="{{car.car_img.url}}" alt="Card image cap"> </a>
+    <div class="card-body">
+      <h5 class="card-title">{{car.make}}</h5>
+      <h6 style="font-weight: bold;  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; " class="card-title p-1  ">₹ {{car.price}}</h6 >
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+      <div class="hmbtn">
+        <a  href="{% url 'view' car.id %}" class="btn btn-primary text-xl-center">Views details  </a>
+       
+      </div>
+  
+    </div>
+ 
+  </div>
+</div>
+{% endfor %}
+
+
+{%endblock %}   

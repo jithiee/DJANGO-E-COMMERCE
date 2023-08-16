@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    .cform{
+    margin: 50px;
+
+    }
+    button {
+      background-color: #4CAF50; 
+      color: white;
+      padding: 10px 20px; 
+      border: none; 
+      cursor: pointer; 
+      font-size: 16px; 
+    }
+  
+    a button {
+      background-color:black; 
+     
+      color: white;
+      padding: 10px 20px; 
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .back{
+     margin-top:20px
+  
+  
+    }
+  </style> 
+
+<form action="" enctype="multipart/form-data" method="POST"  class=" cform m-5   "  >
+    {% csrf_token %}
+    {{ form|crispy }} <br>
+
+<button  > Submit</button>
+<a href="{% url 'car_list' %}" >Go Car List </a>
+
+</form>
+
+{% endblock %}
