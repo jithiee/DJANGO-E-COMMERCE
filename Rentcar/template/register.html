@@ -3,90 +3,79 @@
 
 {% block content %}
 <style>
-/* Reset some default browser styles */
- h1, h2, h3, p, ul, li, form {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.login-form {
-    max-width: 400px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.form-check-label {
-    font-weight: normal;
-}
-
-.btn-primary {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-}
-
-.signin-link {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.signin-link a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.signin-link a:hover {
-    text-decoration: underline;
-}
 
 
+       
+        .container-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    
+   
+        .login-form {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #e2f6f4;
+            border-radius: 10px;
+            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+       
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+    
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+    
+        
+        .btn-primary {
+           
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 100px;
+        }
+ 
+        .signin-link a {
+            color:blue;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+        label{
+            font-family: serif;
+ 
+        }
 
 
 </style>
 
-
+{% include 'include/alert.html' %}
 
 
 <div class="container container-center">
 
    
     <form action="{% url 'register' %}" method="POST" class="login-form">
-        {{ form.email.errors }}
+   {{ form.email.errors }} 
         {{ form.non_field_errors }} 
         
         {% csrf_token %}
@@ -134,7 +123,7 @@ body {
         </div>
         
         
-        <p class="signin-link">Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+        <p class="signin-link  ">Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
         
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Register</button>
@@ -142,6 +131,6 @@ body {
         
         
     </form>
-    {% include 'include/alert.html' %}
+
 </div>
 {% endblock %}

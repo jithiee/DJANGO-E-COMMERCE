@@ -21,43 +21,48 @@ from django.core.mail import EmailMessage
 def register(request):
     if request.method =='POST':
       form =  RegistrationForm(request.POST)
+     
       if form.is_valid():
             first_name = form.cleaned_data['first_name']
+            # print( form.cleaned_data )
+            # print(form.cleaned_data['first_name'])
+          
             last_name = form.cleaned_data['last_name']
+         
             phone_number = form.cleaned_data['phone_number']
+         
             email = form.cleaned_data['email']
+         
             password = form.cleaned_data['password']
-            username = email.split('@')[0]
+            
+            username = email.split('@')[0] 
+            # print(username)
+            
             user = Account.objects.create_user(first_name =first_name,last_name = last_name,email =email ,username=username )
             user.phone_number = phone_number
             user.set_password(password)
             user.is_active= False
             user.save()
-            print('1')
+            # print('1')
             
             #user activation 
             current_site = get_current_site(request)
-            mail_subject = "please activate your account"  # Fixed typo here
-            print('2')
+            mail_subject = "please activate your account"  # Fixed typo here    
+            # print('2')
             message = render_to_string('verification_email.html',{
                'user':user,
                'domain': current_site,
                'uid': urlsafe_base64_encode(force_bytes(user.pk)), #user id
                'token':default_token_generator.make_token(user),
             })
-            print('3')
+            # print('3')
 
             to_email = email
             sent_email = EmailMessage(mail_subject, message, to=[to_email])
             sent_email.send()  
-
+            # print('4')
             
-            
-
-            
-            print('4')
-            
-            messages.success(request,'Registration Successfull')
+            messages.success(request,'Registration Successfull Check your email for further instructions')
             # return redirect('login')
     else:
         form = RegistrationForm()
@@ -85,18 +90,20 @@ def login(request):
 
 
 
-@login_required(login_url = 'login') #first chech  if you are login you can logout if you are not login you can't logout
+@login_required(login_url = 'login')                  #first chech  if you are login you can logout if you are not login you can't logout
 def logout(request):
     auth.logout(request)
     messages.success(request,'you are logged out')
     return redirect('login')
   
+  
+  # email activation 
 def activate(request,uidb64,token):
    try :
        uid = urlsafe_base64_decode(uidb64).decode()
        print(uid)
        user =  Account.objects.get (pk = uid)
-       print('jhjh',user)
+    #    print('jhjh',user)
    except (TypeError,ValueError,OverflowError,Account.DoesNotExist):
        user = None
    if user is not None and default_token_generator.check_token(user,token):
@@ -107,10 +114,23 @@ def activate(request,uidb64,token):
    else:
        messages.error(request,'Invalid activation link') 
        return redirect('register')
-        
-@login_required(login_url = 'login')
-def dashboard(request):
-    return render(request, 'dashboard.html')
+    
+    
+    
+
+# def login_need(view_func):
+#     def wrapper(request, *args, **kwargs):
+#         if request.user.is_authenticated:
+#             return view_func(request, *args, **kwargs)
+#         else:
+#             return redirect('login')
+#     return wrapper
+   
+    
+
+# @login_need 
+    
+
 
 
 def foregotpassword(request):
@@ -121,7 +141,7 @@ def foregotpassword(request):
             
             #Reset password email
             current_site = get_current_site(request)
-            mail_subject = "reset your password"  # Fixed typo here
+            mail_subject = "reset your password"  # Fixed type here
             print('2')
             message = render_to_string('resetpassword_email.html',{
                'user':user,
@@ -146,7 +166,7 @@ def foregotpassword(request):
         
     return render (request, 'foregotpassword.html' )
 
-def resetpassword_validate(request,uidb64,token):   
+def resetpassword_validate(request,uidb64,token):
     try :
        uid = urlsafe_base64_decode(uidb64).decode()
        print(uid)

@@ -9,19 +9,21 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from dotenv import load_dotenv
+load_dotenv() #take environment variable form .env
 from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRETKEY=os.getenv('SECRETKEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)084jpbto8$f$kd)4135f**qbbt2&xk*+s#9!k^*a#m1t6kxd_'
+SECRET_KEY = 'django-insecure-{SECRETKEY}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,12 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',   
     'Home',
     'accounts',
     'Admin_panel',
+    'Booking',
     'crispy_forms',
     'crispy_bootstrap5',
+    'fontawesomefree'
+   
+    
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -84,17 +90,30 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME':'rent_car_db',
+#         'USER':'postgres',
+#         'PASSWORD':1598,
+#         'HOST':'localhost',
+       
+       
+#     }
+# }   
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'car_rent_db',
-        'USER':'postgres',
-        'PASSWORD':1598,
-        'HOST':'localhost',
-       
+        'NAME':'backends',
+        'USER':'mysuperuser',
+        'PASSWORD':'mysuperuser',
+        'HOST':'backends.ckxhihyfltqd.eu-north-1.rds.amazonaws.com',
+       'PORT':'5432',
        
     }
 }   
+
 
 
 # Password validation
@@ -154,10 +173,34 @@ MESSAGE_TAGS = {
 
 #SMTP comfigeration 
 
+EMAILHOSTUSER=os.getenv('EMAILHOSTUSER')
+EMAILHOSTPASSWORD=os.getenv('EMAILHOSTPASSWORD')
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT =  587
-EMAIL_HOST_USER = 'app3691598@gmail.com'
-EMAIL_HOST_PASSWORD = 'qjjdpeijbremafne'
+EMAIL_HOST_USER = EMAILHOSTUSER
+EMAIL_HOST_PASSWORD = EMAILHOSTPASSWORD
 EMAIL_USE_TLS = True
 
 
+
+RAZORPAYKEY  =os.getenv('RAZORPAYKEY')
+RAZORPAYSECRETKEY  =os.getenv('RAZORPAYSECRETKEY')
+
+RAZORPAY_KEY = RAZORPAYKEY
+RAZORPAY_SECRET_KEY  = RAZORPAYSECRETKEY
+
+
+AWSACCESSKEYID=os.getenv('AWSACCESSKEYID')
+AWSSECRETACCESSKEY=os.getenv('AWSSECRETACCESSKEY')
+
+
+AWS_ACCESS_KEY_ID=AWSACCESSKEYID
+AWS_SECRET_ACCESS_KEY=AWSSECRETACCESSKEY
+AWS_STORAGE_BUCKET_NAME='backendrentcar'
+AWS_S3_SIGNATURE_NAME='s3v4',
+AWS_S3_REGION_NAME='us-east-1'
+AWS_S3_FILE_OVERWRITE=False
+AWS_DEFAULT_ACL =None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE ='storages.backends.s3boto3.S3Boto3Storage'

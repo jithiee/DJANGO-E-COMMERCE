@@ -12,6 +12,31 @@ class RegistrationForm(forms.ModelForm):
          'class' : 'form_control',
         
     }))
+    
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder':'First name',
+         'class' : 'form_control',
+        
+    }))
+    
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder':'Last name',
+         'class' : 'form_control',
+        
+    }))
+    
+    phone_number = forms.CharField(widget=forms.NumberInput(attrs={
+        'placeholder':'Phone number',
+         'class' : 'form_control',
+        
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+          'placeholder':'Enter email',
+         'class' : 'form_control',
+    }))
+    
+    
+    
     class Meta:
         model = Account
         fields = ['first_name','last_name','phone_number','email','password']
